@@ -8,7 +8,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument(
     "--pre_release",
-    type=bool,
+    type=str,
     help="Whether or not this is a pre-release.",
     required=True,
 )
@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
     frontend_release = frontend_repo.get_latest_release()
 
-    if args.pre_release:
+    if args.pre_release == "true":
         server_latest_release = next(
             filter(lambda release: release.prerelease, server_repo.get_releases())
         )
