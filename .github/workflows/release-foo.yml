@@ -1,28 +1,16 @@
 name: 'Release Notes Merge Action'
 on:
   workflow_dispatch:
-    inputs:
-      github_token:
-        description: 'GitHub Token'
-        required: true
-        default: default
-      pre_release:
-        description: 'Is this a pre-release?'
-        required: true
-      new_frontend_tag:
-        description: 'New frontend tag'
-        required: true
-      new_frontend_release_title:
-        description: 'New frontend release title'
-        required: true
-      new_server_tag:
-        description: 'New server tag'
-        required: true
-      new_server_release_title:
-        description: 'New server release title'
-        required: true
+    
 jobs:
   do_releases:
     runs-on: ubuntu-latest
     steps:  
       - uses: jozefKruszynski/release-notes-merge-action@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }} 
+          pre_release: "true"
+          new_frontend_tag: "1111"
+          new_frontend_release_title: "1111"
+          new_server_tag: "2222"
+          new_server_release_title: "2222"
