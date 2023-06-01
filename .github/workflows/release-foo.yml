@@ -5,27 +5,22 @@ on:
       github_token:
         description: 'GitHub Token'
         required: true
-        default: ${{ secrets.GITHUB_TOKEN }} 
+        default: default
       pre_release:
         description: 'Is this a pre-release?'
         required: true
-        default: 'false'
       new_frontend_tag:
         description: 'New frontend tag'
         required: true
-        default: 'false'
       new_frontend_release_title:
         description: 'New frontend release title'
         required: true
-        default: 'false'
       new_server_tag:
         description: 'New server tag'
         required: true
-        default: 'false'
       new_server_release_title:
         description: 'New server release title'
         required: true
-        default: 'false'
 jobs:
   do_releases:
     runs-on: ubuntu-latest
