@@ -20,16 +20,16 @@ inputs:
     description: 'The new server release title to use for the release.'
     required: true
 branding:
-  icon: 'info'
-  color: 'green'
+  icon: 'box'
+  color: 'purple'
 
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.pre_release }}
-    - ${{ inputs.github_token }}
-    - ${{ inputs.new_frontend_tag }}
-    - ${{ inputs.new_frontend_release_title }}
-    - ${{ inputs.new_server_tag }}
-    - ${{ inputs.new_server_release_title }}
+    - --pre_release=${{ inputs.pre_release }}
+    - --github_token=${{ inputs.github_token }}
+    - --new_frontend_tag=${{ inputs.new_frontend_tag }}
+    - --new_frontend_release_title=${{ inputs.new_frontend_release_title }}
+    - --new_server_tag=${{ inputs.new_server_tag }}
+    - --new_server_release_title=${{ inputs.new_server_release_title }}
