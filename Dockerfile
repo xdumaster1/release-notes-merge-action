@@ -8,4 +8,4 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["/release-notes-merge-action.py"]
+ENTRYPOINT ["python","/release-notes-merge-action.py"]
