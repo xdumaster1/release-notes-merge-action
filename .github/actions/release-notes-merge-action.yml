@@ -1,11 +1,11 @@
-name: "Build"
+name: 'Release Notes Merge Action'
 on:
   workflow_dispatch:
 jobs:
   do_releases:
     runs-on: ubuntu-latest
   steps:  
-    - uses: ./
+    - uses: jozefKruszynski/release-notes-merge-action@main
       with:
         pre_release: true
         github_token: ${{ secrets.GITHUB_TOKEN }} 
