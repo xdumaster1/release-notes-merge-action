@@ -1,0 +1,35 @@
+name: 'MASS Release Action'
+description: 'This action creates a set of new releases for the MASS project, and aggregates release notes across several repositories.'
+inputs:
+  pre_release:
+    description: 'Whether or not this is a pre-release.'
+    required: true
+  github_token:
+    description: 'The GitHub token to use for authentication.'
+    required: true
+  new_frontend_tag:
+    description: 'The new frontend tag to use for the release.'
+    required: true
+  new_frontend_release_title:
+    description: 'The new frontend release title to use for the release.'
+    required: true
+  new_server_tag:
+    description: 'The new server tag to use for the release.'
+    required: true
+  new_server_release_title:
+    description: 'The new server release title to use for the release.'
+    required: true
+branding:
+  icon: 'info'
+  color: 'green'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.pre_release }}
+    - ${{ inputs.github_token }}
+    - ${{ inputs.new_frontend_tag }}
+    - ${{ inputs.new_frontend_release_title }}
+    - ${{ inputs.new_server_tag }}
+    - ${{ inputs.new_server_release_title }}
