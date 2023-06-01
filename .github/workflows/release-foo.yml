@@ -8,3 +8,8 @@ jobs:
       - uses: jozefKruszynski/release-notes-merge-action@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }} 
+          pre_release: "true"
+          new_frontend_tag: "1111"
+          new_frontend_release_title: "1111"
+          new_server_tag: "1111"
+          new_server_release_title: "1111"
