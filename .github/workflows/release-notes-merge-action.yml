@@ -5,7 +5,7 @@ jobs:
   do_releases:
     runs-on: ubuntu-latest
   steps:  
-    - uses: jozefKruszynski/release-notes-merge-action
+    - uses: ./
       with:
         pre_release: true
         github_token: ${{ secrets.GITHUB_TOKEN }} 
