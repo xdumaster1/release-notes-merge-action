@@ -3,9 +3,10 @@ import datetime
 
 from github import Github
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser()
+parser.add_argument("--github_token", type=str, help="Github token.", required=True)
 
+if __name__ == "__main__":
     args = parser.parse_args()
 
     ORGANIZATION = "music-assistant"
