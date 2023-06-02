@@ -33,7 +33,7 @@ if __name__ == "__main__":
     foo = changelog_file.decoded_content.decode("utf-8")
     log_date = datetime.datetime.now().strftime("%m-%d-%Y")
 
-    updated_changelog = """
+    updated_changelog = f"""
     # {server_latest_release.tag_name} - [{log_date}]
     
     # Frontend
