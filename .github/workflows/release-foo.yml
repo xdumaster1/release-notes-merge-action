@@ -28,3 +28,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:  
       - uses: jozefKruszynski/release-notes-merge-action@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }} 
