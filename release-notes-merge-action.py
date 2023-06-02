@@ -70,7 +70,7 @@ if __name__ == "__main__":
     log_date = datetime.datetime.now().strftime("%m-%d-%Y")
 
     updated_changelog = markdown.markdown(
-        f"# {server_latest_release.tag_name} - [{log_date}]\n# Frontend\n{frontend_release.body}\n# Server\n{server_latest_pre_release.body}\n{foo}"
+        f"# {server_latest_release.tag_name} - [{log_date}]\n# Frontend\n{frontend_release.body}\n# Server\n{server_latest_release.body}\n{foo}"
     )
 
     # target_repo.update_file("CHANGELOG.md", f"Update CHANGELOG.md for {server_latest_pre_release.tag_name}", updated_changelog, changelog_file.sha, branch="main")
