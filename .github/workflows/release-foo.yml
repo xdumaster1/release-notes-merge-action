@@ -1,6 +1,27 @@
 name: 'Release Notes Merge Action'
 on:
   workflow_dispatch:
+    inputs:
+      pre_release:
+        description: 'Is this a pre-release?'
+        required: true
+        default: 'false'
+      new_frontend_tag:
+        description: 'New frontend tag'
+        required: true
+        default: 'false'
+      new_frontend_release_title:
+        description: 'New frontend release title'
+        required: true
+        default: 'false'
+      new_server_tag:
+        description: 'New server tag'
+        required: true
+        default: 'false'
+      new_server_release_title:
+        description: 'New server release title'
+        required: true
+        default: 'false'
     
 jobs:
   do_releases:
@@ -10,7 +31,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }} 
           pre_release: ${{ github.event.inputs.pre_release }}
-          new_frontend_tag: ${{ github.event.inputs.new_frontend_tag }}
+          new_frontend_tag: "${{ github.event.inputs.new_frontend_tag }}"
           new_frontend_release_title: ${{ github.event.inputs.new_frontend_release_title }}
           new_server_tag: ${{ github.event.inputs.new_server_tag }}
           new_server_release_title: ${{ github.event.inputs.new_server_release_title }}
