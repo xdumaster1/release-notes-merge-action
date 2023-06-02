@@ -32,7 +32,7 @@ parser.add_argument(
     required=True,
 )
 parser.add_argument(
-    "--neW_server_release_title",
+    "--new_server_release_title",
     type=str,
     help="The new server release title to use for the release.",
     required=True,
