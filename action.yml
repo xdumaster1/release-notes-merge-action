@@ -1,5 +1,9 @@
 name: 'MASS Release Action'
 description: 'This action creates a set of new releases for the MASS project, and aggregates release notes across several repositories.'
+inputs:
+  github_token:
+    description: 'The GitHub token to use for authentication.'
+    required: true
 branding:
   icon: 'box'
   color: 'purple'
