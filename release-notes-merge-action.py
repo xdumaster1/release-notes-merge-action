@@ -62,10 +62,14 @@ if __name__ == "__main__":
         server_latest_release = server_repo.get_latest_release()
 
     if args.new_frontend_tag != frontend_release.tag_name:
-        raise ValueError("Frontend tag does not match the latest release tag.")
+        raise ValueError(
+            f"Frontend tag: {args.new_frontend_tag} does not match the latest release tag."
+        )
 
     if args.new_server_tag != server_latest_release.tag_name:
-        raise ValueError("Server tag does not match the latest release tag.")
+        raise ValueError(
+            f"Server tag: {args.new_frontend_tag} does not match the latest release tag."
+        )
 
     target_release = target_repo.get_latest_release()
     target_release_id = target_release.id
