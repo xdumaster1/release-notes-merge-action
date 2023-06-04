@@ -1,6 +1,27 @@
 name: 'Release Notes Merge Action'
 on:
   workflow_dispatch:
+    inputs:
+        pre_release:
+          description: 'Is this a pre-release?'
+          required: true
+          default: 'true'
+        new_frontend_tag:
+          description: 'New frontend tag'
+          required: true
+          default: ''
+        new_frontend_release_title:
+          description: 'New frontend release title'
+          required: true
+          default: ''
+        new_server_tag:
+          description: 'New server tag'
+          required: true
+          default: ''
+        new_server_release_title:
+          description: 'New server release title'
+          required: true
+          default: ''
     
 jobs:
   do_releases:
