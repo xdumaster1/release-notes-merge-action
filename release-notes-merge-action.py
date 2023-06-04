@@ -81,10 +81,10 @@ if __name__ == "__main__":
     existing_changelog_content = changelog_file.decoded_content.decode("utf-8")
     log_date = datetime.datetime.now().strftime("%d.%m.%Y")
 
-    updated_changelog = f"# {server_latest_release.tag_name} - [{log_date}]\n\n"
-    updated_changelog += "# Frontend\n\n"
+    updated_changelog = f"# {server_latest_release.title} - [{log_date}]\n\n"
+    updated_changelog += f"## Frontend {frontend_release.title}\n\n"
     updated_changelog += f"{frontend_release.body}\n\n"
-    updated_changelog += "# Server\n\n"
+    updated_changelog += f"## Server {server_latest_release.title}\n\n"
     updated_changelog += f"{server_latest_release.body}\n\n"
 
     server_repo.update_release(
