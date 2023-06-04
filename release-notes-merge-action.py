@@ -11,7 +11,12 @@ parser.add_argument(
     help="Whether or not this is a pre-release.",
     required=True,
 )
-parser.add_argument("--github_token", type=str, help="Github token.", required=True)
+parser.add_argument(
+    "--github_token",
+    type=str,
+    help="Github API Access token, NOT the usual Github token.",
+    required=True,
+)
 parser.add_argument(
     "--new_frontend_tag",
     type=str,
