@@ -55,7 +55,6 @@ if __name__ == "__main__":
     frontend_repo = github.get_repo(f"{ORGANIZATION}/{FRONTEND_REPO}")
     server_repo = github.get_repo(f"{ORGANIZATION}/{SERVER_REPO}")
     addon_repo = github.get_repo(f"{ORGANIZATION}/{ADDON_REPO}")
-    target_repo = github.get_repo("jozefKruszynski/release-notes-merge-action")
 
     frontend_release = frontend_repo.get_latest_release()
 
@@ -76,10 +75,7 @@ if __name__ == "__main__":
             f"Server tag: {args.new_frontend_tag} does not match the latest release tag."
         )
 
-    target_release = target_repo.get_latest_release()
-    target_release_id = target_release.id
-
-    changelog_file = target_repo.get_contents("CHANGELOG.md", ref="main")
+    changelog_file = addon_repo.get_contents("CHANGELOG.md", ref="main")
     existing_changelog_content = changelog_file.decoded_content.decode("utf-8")
     log_date = datetime.datetime.now().strftime("%d.%m.%Y")
 
@@ -89,11 +85,13 @@ if __name__ == "__main__":
     updated_changelog += "# Server\n\n"
     updated_changelog += f"{server_latest_release.body}\n\n"
 
-    target_release.update_release(name="The first test", message=updated_changelog)
+    server_repo.update_release(
+        name=server_latest_release.title, message=updated_changelog
+    )
 
     updated_changelog += f"{existing_changelog_content}\n\n"
 
-    target_repo.update_file(
+    addon_repo.update_file(
         "CHANGELOG.md",
         f"Update CHANGELOG.md for {server_latest_release.tag_name}",
         updated_changelog,
