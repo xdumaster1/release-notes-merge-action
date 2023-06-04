@@ -1,2 +1,1 @@
-markdown==3.4.3
 PyGithub==v1.58.2

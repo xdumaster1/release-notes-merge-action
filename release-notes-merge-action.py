@@ -75,7 +75,9 @@ if __name__ == "__main__":
             f"Server tag: {args.new_frontend_tag} does not match the latest release tag."
         )
 
-    changelog_file = addon_repo.get_contents("CHANGELOG.md", ref="main")
+    changelog_file = addon_repo.get_contents(
+        "music_assistant_beta/CHANGELOG.md", ref="main"
+    )
     existing_changelog_content = changelog_file.decoded_content.decode("utf-8")
     log_date = datetime.datetime.now().strftime("%d.%m.%Y")
 
@@ -98,5 +100,3 @@ if __name__ == "__main__":
         changelog_file.sha,
         branch="main",
     )
-
-    print(updated_changelog)
