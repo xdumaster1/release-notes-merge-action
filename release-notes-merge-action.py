@@ -87,7 +87,7 @@ if __name__ == "__main__":
     updated_changelog += f"## Server {server_latest_release.title}\n\n"
     updated_changelog += f"{server_latest_release.body}\n\n"
 
-    server_repo.update_release(
+    server_latest_release.update_release(
         name=server_latest_release.title, message=updated_changelog
     )
 
