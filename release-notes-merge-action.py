@@ -93,10 +93,15 @@ if __name__ == "__main__":
 
     updated_changelog += f"{existing_changelog_content}\n\n"
 
+    ref = addon_repo.get_git_ref("heads/main")
+    sha = ref.object.sha
+    new_branch_name = f"release-{server_latest_release.tag_name}"
+    new_branch = addon_repo.create_git_ref(ref=f"refs/heads/{new_branch_name}", sha=sha)
+
     addon_repo.update_file(
-        "CHANGELOG.md",
+        "music_assistant_beta/CHANGELOG.md",
         f"Update CHANGELOG.md for {server_latest_release.tag_name}",
         updated_changelog,
         changelog_file.sha,
-        branch="main",
+        branch=new_branch_name,
     )
