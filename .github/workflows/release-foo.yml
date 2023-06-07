@@ -24,12 +24,12 @@ on:
           default: ''
     
 jobs:
-  do_releases:
+  merge-and-release:
     runs-on: ubuntu-latest
     steps:  
-      - uses: jozefKruszynski/release-notes-merge-action@main
+      - uses: music-assistant/release-notes-merge-action@main
         with:
-          github_token: ${{ secrets.ACCESS_TOKEN }}
+          github_token: ${{ secrets.API_TOKEN_GITHUB }}
           pre_release: ${{ inputs.pre_release }}
           new_frontend_tag: ${{ inputs.new_frontend_tag }}
           new_frontend_release_title: ${{ inputs.new_frontend_release_title }}
