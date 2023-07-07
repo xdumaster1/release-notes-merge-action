@@ -22,13 +22,15 @@ parser.add_argument(
     "--new_frontend_tag",
     type=str,
     help="The new frontend tag to use for the release.",
-    required=True,
+    required=False,
+    default="";
 )
 parser.add_argument(
     "--new_frontend_release_title",
     type=str,
     help="The new frontend release title to use for the release.",
-    required=True,
+    required=False,
+    default="",
 )
 parser.add_argument(
     "--new_server_tag",
@@ -42,10 +44,20 @@ parser.add_argument(
     help="The new server release title to use for the release.",
     required=True,
 )
+parser.add_argument(
+    "--dry_run",
+    type=str,
+    help="Whether or not this is a dry run.",
+    required=False,
+    default="false",
+)
 
 if __name__ == "__main__":
     args = parser.parse_args()
-
+    
+    dry_run_bool = args.dry_run == "true"
+    
+    MAIN = "main"
     ORGANIZATION = "music-assistant"
     FRONTEND_REPO = "frontend"
     SERVER_REPO = "server"
@@ -67,27 +79,22 @@ if __name__ == "__main__":
     else:
         server_latest_release = server_repo.get_latest_release()
 
-    if args.new_frontend_tag != frontend_release.tag_name:
+    if args.new_frontend_tag != "" and args.new_frontend_tag != frontend_release.tag_name:
         raise ValueError(
             f"Frontend tag: {args.new_frontend_tag} does not match the latest release tag."
         )
 
     if args.new_server_tag != server_latest_release.tag_name:
         raise ValueError(
-            f"Server tag: {args.new_frontend_tag} does not match the latest release tag."
+            f"Server tag: {args.new_server_tag} does not match the latest release tag."
         )
-
-    ref = addon_repo.get_git_ref("heads/main")
-    sha = ref.object.sha
-    new_branch_name = f"release-{server_latest_release.tag_name}"
-    new_branch = addon_repo.create_git_ref(ref=f"refs/heads/{new_branch_name}", sha=sha)
-
+    
     changelog_file = addon_repo.get_contents(
-        "music_assistant_beta/CHANGELOG.md", ref=new_branch_name
+        "music_assistant_beta/CHANGELOG.md", ref=MAIN
     )
 
     addon_config_file = addon_repo.get_contents(
-        "music_assistant_beta/config.yaml", ref=new_branch_name
+        "music_assistant_beta/config.yaml", ref=MAIN
     )
 
     existing_changelog_content = changelog_file.decoded_content.decode("utf-8")
@@ -98,22 +105,29 @@ if __name__ == "__main__":
     aggregate_release_notes += f"## Server {server_latest_release.title}\n\n"
     aggregate_release_notes += f"{server_latest_release.body}\n\n"
 
-    server_latest_release.update_release(
-        name=server_latest_release.title,
-        message=aggregate_release_notes,
-        prerelease=pre_release_bool,
-    )
+    if dry_run_bool:
+        print(aggregate_release_notes)
+    else:
+        server_latest_release.update_release(
+            name=server_latest_release.title,
+            message=aggregate_release_notes,
+            prerelease=pre_release_bool,
+        )
+    
     updated_changelog = f"# [{server_latest_release.title}] - {log_date}\n\n"
     updated_changelog += f"{aggregate_release_notes}"
     updated_changelog += f"{existing_changelog_content}\n\n"
 
-    addon_repo.update_file(
-        path="music_assistant_beta/CHANGELOG.md",
-        message=f"Update CHANGELOG.md for {server_latest_release.tag_name}",
-        content=updated_changelog,
-        sha=changelog_file.sha,
-        branch=new_branch_name,
-    )
+    if dry_run_bool:
+        print(updated_changelog)
+    else:
+        addon_repo.update_file(
+            path="music_assistant_beta/CHANGELOG.md",
+            message=f"Update CHANGELOG.md for {server_latest_release.tag_name}",
+            content=updated_changelog,
+            sha=changelog_file.sha,
+            branch=MAIN,
+        )
 
     existing_config_content = yaml.safe_load(
         addon_config_file.decoded_content.decode("utf-8")
@@ -122,18 +136,14 @@ if __name__ == "__main__":
     existing_config_content["version"] = server_latest_release.tag_name
 
     updated_config = yaml.dump(existing_config_content)
-
-    addon_repo.update_file(
-        path="music_assistant_beta/config.yaml",
-        message=f"Update config.yaml for {server_latest_release.tag_name}",
-        content=updated_config,
-        sha=changelog_file.sha,
-        branch=new_branch_name,
-    )
-
-    addon_repo.create_pull(
-        title=new_branch_name,
-        body=f"Update CHANGELOG.md for {server_latest_release.tag_name}",
-        head=new_branch_name,
-        base="main",
-    )
+    
+    if dry_run_bool:
+        print(updated_config)
+    else:
+        addon_repo.update_file(
+            path="music_assistant_beta/config.yaml",
+            message=f"Update config.yaml for {server_latest_release.tag_name}",
+            content=updated_config,
+            sha=changelog_file.sha,
+            branch=MAIN,
+        )

@@ -9,16 +9,22 @@ inputs:
     required: true
   new_frontend_tag:
     description: 'The new frontend tag to use for the release.'
-    required: true
+    required: false
+    default: ""
   new_frontend_release_title:
     description: 'The new frontend release title to use for the release.'
-    required: true
+    required: false
+    default: ""
   new_server_tag:
     description: 'The new server tag to use for the release.'
     required: true
   new_server_release_title:
     description: 'The new server release title to use for the release.'
     required: true
+  dry_run:
+    description: 'Whether or not to run the action in dry run mode.'
+    required: false
+    default: "false"
 branding:
   icon: 'box'
   color: 'purple'
@@ -33,3 +39,4 @@ runs:
     - --new_frontend_release_title=${{ inputs.new_frontend_release_title }}
     - --new_server_tag=${{ inputs.new_server_tag }}
     - --new_server_release_title=${{ inputs.new_server_release_title }}
+    - --dry_run=${{ inputs.dry_run }}
