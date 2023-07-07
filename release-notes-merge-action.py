@@ -63,7 +63,7 @@ if __name__ == "__main__":
     SERVER_REPO = "server"
     ADDON_REPO = "home-assistant-addon"
 
-    github = Github(args.github_token)
+    github = Github(login_or_token=args.github_token)
 
     frontend_repo = github.get_repo(f"{ORGANIZATION}/{FRONTEND_REPO}")
     server_repo = github.get_repo(f"{ORGANIZATION}/{SERVER_REPO}")
