@@ -144,6 +144,6 @@ if __name__ == "__main__":
             path="music_assistant_beta/config.yaml",
             message=f"Update config.yaml for {server_latest_release.tag_name}",
             content=updated_config,
-            sha=changelog_file.sha,
+            sha=addon_config_file.sha,
             branch=MAIN,
         )
