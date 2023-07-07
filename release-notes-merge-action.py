@@ -23,7 +23,7 @@ parser.add_argument(
     type=str,
     help="The new frontend tag to use for the release.",
     required=False,
-    default="";
+    default="",
 )
 parser.add_argument(
     "--new_frontend_release_title",
@@ -54,9 +54,9 @@ parser.add_argument(
 
 if __name__ == "__main__":
     args = parser.parse_args()
-    
+
     dry_run_bool = args.dry_run == "true"
-    
+
     MAIN = "main"
     ORGANIZATION = "music-assistant"
     FRONTEND_REPO = "frontend"
@@ -79,7 +79,10 @@ if __name__ == "__main__":
     else:
         server_latest_release = server_repo.get_latest_release()
 
-    if args.new_frontend_tag != "" and args.new_frontend_tag != frontend_release.tag_name:
+    if (
+        args.new_frontend_tag != ""
+        and args.new_frontend_tag != frontend_release.tag_name
+    ):
         raise ValueError(
             f"Frontend tag: {args.new_frontend_tag} does not match the latest release tag."
         )
@@ -88,7 +91,7 @@ if __name__ == "__main__":
         raise ValueError(
             f"Server tag: {args.new_server_tag} does not match the latest release tag."
         )
-    
+
     changelog_file = addon_repo.get_contents(
         "music_assistant_beta/CHANGELOG.md", ref=MAIN
     )
@@ -113,7 +116,7 @@ if __name__ == "__main__":
             message=aggregate_release_notes,
             prerelease=pre_release_bool,
         )
-    
+
     updated_changelog = f"# [{server_latest_release.title}] - {log_date}\n\n"
     updated_changelog += f"{aggregate_release_notes}"
     updated_changelog += f"{existing_changelog_content}\n\n"
@@ -136,7 +139,7 @@ if __name__ == "__main__":
     existing_config_content["version"] = server_latest_release.tag_name
 
     updated_config = yaml.dump(existing_config_content)
-    
+
     if dry_run_bool:
         print(updated_config)
     else:
