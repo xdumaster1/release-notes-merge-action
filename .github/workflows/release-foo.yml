@@ -35,3 +35,4 @@ jobs:
           new_frontend_release_title: ${{ inputs.new_frontend_release_title }}
           new_server_tag: ${{ inputs.new_server_tag }}
           new_server_release_title: ${{ inputs.new_server_release_title }}
+          dry_run: ${{ inputs.dry_run }}
