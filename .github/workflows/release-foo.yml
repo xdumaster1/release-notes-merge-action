@@ -8,11 +8,11 @@ on:
           default: 'true'
         new_frontend_tag:
           description: 'New frontend tag'
-          required: true
+          required: false
           default: ''
         new_frontend_release_title:
           description: 'New frontend release title'
-          required: true
+          required: false
           default: ''
         new_server_tag:
           description: 'New server tag'
@@ -22,6 +22,10 @@ on:
           description: 'New server release title'
           required: true
           default: ''
+        dry_run:
+          description: 'Dry run of the release notes merge'
+          required: false
+          default: 'false'
     
 jobs:
   merge-and-release:
