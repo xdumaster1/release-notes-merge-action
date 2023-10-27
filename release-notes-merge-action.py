@@ -56,7 +56,7 @@ if __name__ == "__main__":
     log_date = datetime.datetime.now().strftime("%d.%m.%Y")
 
 
-    if FRONTEND_REPO_PR_MESSAGE in server_latest_release.body:
+    if f"{FRONTEND_REPO_PR_MESSAGE} {frontend_release.tag_name}" in server_latest_release.body:
         # If the server release contains a PR message, we need to update the changelog and release notes
         aggregate_release_notes = f"## Frontend {frontend_release.title}\n\n"
         aggregate_release_notes += f"{frontend_release.body}\n\n"
