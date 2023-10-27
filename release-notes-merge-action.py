@@ -2,15 +2,14 @@ import argparse
 import datetime
 
 import yaml
-import marko
 from github import Auth, Github
 
 parser = argparse.ArgumentParser()
 
 parser.add_argument(
-    "--pre_release",
+    "--release_tag",
     type=str,
-    help="Whether or not this is a pre-release.",
+    help="Tag of release just built.",
     required=True,
 )
 parser.add_argument(
@@ -38,8 +37,7 @@ if __name__ == "__main__":
 
     frontend_release = frontend_repo.get_latest_release()
 
-    pre_release_bool = args.pre_release
-    if pre_release_bool:
+    if "b" in args.release_tag:
         server_latest_release = next(
             filter(lambda release: release.prerelease, server_repo.get_releases())
         )

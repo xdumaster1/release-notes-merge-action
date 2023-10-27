@@ -1,8 +1,8 @@
 name: 'MASS Release Notes Action'
 description: 'This action aggregates release notes across several repositories.'
 inputs:
-  pre_release:
-    description: 'Whether or not this is a pre-release.'
+  release_tag:
+    description: 'Tag of release just built.'
     required: true
   github_token:
     description: 'The GitHub API access token to use for authentication.'
@@ -15,5 +15,5 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - --pre_release=${{ inputs.pre_release }}
+    - --release_tag=${{ inputs.release_tag }}
     - --github_token=${{ inputs.github_token }}

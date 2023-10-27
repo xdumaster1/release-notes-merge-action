@@ -2,8 +2,8 @@ name: 'Release Notes Merge Action'
 on:
   workflow_dispatch:
     inputs:
-        pre_release:
-          description: 'Is this a pre-release?'
+        release_tag:
+          description: 'Tag of release just built.'
           required: true
           default: 'true'
         new_frontend_tag:
@@ -18,4 +18,4 @@ jobs:
       - uses: music-assistant/release-notes-merge-action@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          pre_release: ${{ inputs.pre_release }}
+          release_tag: ${{ inputs.release_tag }}
