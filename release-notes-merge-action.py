@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
     frontend_release = frontend_repo.get_latest_release()
 
-    pre_release_bool = "true"
+    pre_release_bool = args.pre_release
     if pre_release_bool:
         server_latest_release = next(
             filter(lambda release: release.prerelease, server_repo.get_releases())
