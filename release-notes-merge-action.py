@@ -93,7 +93,7 @@ if __name__ == "__main__":
 
     existing_config_content["version"] = server_latest_release.tag_name
 
-    updated_config = yaml.dump(existing_config_content)
+    updated_config = yaml.dump(existing_config_content, sort_keys=False)
 
     addon_repo.update_file(
         path="music_assistant_beta/config.yaml",
