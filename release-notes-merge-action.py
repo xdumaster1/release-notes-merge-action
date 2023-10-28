@@ -86,19 +86,3 @@ if __name__ == "__main__":
         sha=changelog_file.sha,
         branch=MAIN,
     )
-
-    existing_config_content = yaml.safe_load(
-        addon_config_file.decoded_content.decode("utf-8")
-    )
-
-    existing_config_content["version"] = server_latest_release.tag_name
-
-    updated_config = yaml.dump(existing_config_content, sort_keys=False)
-
-    addon_repo.update_file(
-        path="music_assistant_beta/config.yaml",
-        message=f"Update config.yaml for {server_latest_release.tag_name}",
-        content=updated_config,
-        sha=addon_config_file.sha,
-        branch=MAIN,
-    )
