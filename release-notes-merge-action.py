@@ -17,7 +17,7 @@ parser.add_argument(
     type=str,
     help="Github API Access token, NOT the usual Github token.",
     required=True,
-) 
+)
 
 if __name__ == "__main__":
     args = parser.parse_args()
@@ -28,6 +28,8 @@ if __name__ == "__main__":
     SERVER_REPO = "server"
     ADDON_REPO = "home-assistant-addon"
     FRONTEND_REPO_PR_MESSAGE = "Bump frontend to"
+    DEPENDENCIES = "## ⬆️ Dependencies"
+    WHATS_CHANGED = "## What’s Changed"
 
     github = Github(auth=Auth.Token(args.github_token))
 
@@ -38,7 +40,7 @@ if __name__ == "__main__":
     frontend_release = frontend_repo.get_latest_release()
 
     pre_release_bool = False
-    
+
     if "b" in args.release_tag:
         pre_release_bool = True
 
@@ -60,14 +62,27 @@ if __name__ == "__main__":
     existing_changelog_content = changelog_file.decoded_content.decode("utf-8")
     log_date = datetime.datetime.now().strftime("%d.%m.%Y")
 
-
-    if f"{FRONTEND_REPO_PR_MESSAGE} {frontend_release.tag_name}" in server_latest_release.body:
+    if (
+        f"{FRONTEND_REPO_PR_MESSAGE} {frontend_release.tag_name}"
+        in server_latest_release.body
+    ):
         # If the server release contains a PR message, we need to update the changelog and release notes
-        aggregate_release_notes = f"## Frontend {frontend_release.title}\n\n"
-        aggregate_release_notes += f"{frontend_release.body}\n\n"
-        aggregate_release_notes += f"## Server {server_latest_release.title}\n\n"
-        aggregate_release_notes += f"{server_latest_release.body}\n\n"
+        server_split = server_latest_release.body.split(DEPENDENCIES)
+        frontend_split = frontend_release.body.split(DEPENDENCIES)
 
+        server_split_formatted = server_split[0].replace(WHATS_CHANGED, "").strip()
+        frontend_split_formatted = frontend_split[0].replace(WHATS_CHANGED, "").strip()
+
+        aggregate_release_notes = f"{WHATS_CHANGED}\n\n"
+        aggregate_release_notes += f"### Server {server_latest_release.title}\n\n"
+        aggregate_release_notes += f"{server_split_formatted}\n\n"
+        aggregate_release_notes += f"### Frontend {frontend_release.title}\n\n"
+        aggregate_release_notes += f"{frontend_split_formatted}\n\n"
+        aggregate_release_notes += f"{DEPENDENCIES}\n\n"
+        aggregate_release_notes += "### Server\n\n"
+        aggregate_release_notes += f"{server_split[1].strip()}\n\n"
+        aggregate_release_notes += f"### Frontend\n\n"
+        aggregate_release_notes += f"{frontend_split[1].strip()}\n\n"
 
         server_latest_release.update_release(
             name=server_latest_release.title,

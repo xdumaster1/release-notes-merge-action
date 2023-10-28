@@ -19,3 +19,4 @@ coverage.xml
 Dockerfile
 .dockerignore
 action.yml
+dev/
