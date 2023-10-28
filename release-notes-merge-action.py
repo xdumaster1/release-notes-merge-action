@@ -27,7 +27,7 @@ if __name__ == "__main__":
     FRONTEND_REPO = "frontend"
     SERVER_REPO = "server"
     ADDON_REPO = "home-assistant-addon"
-    FRONTEND_REPO_PR_MESSAGE = "Update files for"
+    FRONTEND_REPO_PR_MESSAGE = "Bump frontend to"
 
     github = Github(auth=Auth.Token(args.github_token))
 
