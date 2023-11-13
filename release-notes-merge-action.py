@@ -62,6 +62,8 @@ if __name__ == "__main__":
     existing_changelog_content = changelog_file.decoded_content.decode("utf-8")
     log_date = datetime.datetime.now().strftime("%d.%m.%Y")
 
+    aggregate_release_notes = server_latest_release.body
+
     if (
         f"{FRONTEND_REPO_PR_MESSAGE} {frontend_release.tag_name}"
         in server_latest_release.body
