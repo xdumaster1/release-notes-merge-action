@@ -93,7 +93,7 @@ if __name__ == "__main__":
         )
 
     updated_changelog = f"# [{server_latest_release.title}] - {log_date}\n\n"
-    updated_changelog += f"{aggregate_release_notes}"
+    updated_changelog += f"{aggregate_release_notes}\n\n"
     updated_changelog += f"{existing_changelog_content}\n\n"
 
     addon_repo.update_file(
