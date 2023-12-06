@@ -27,7 +27,7 @@ if __name__ == "__main__":
     FRONTEND_REPO = "frontend"
     SERVER_REPO = "server"
     ADDON_REPO = "home-assistant-addon"
-    FRONTEND_REPO_PR_MESSAGE = "Bump frontend to"
+    FRONTEND_REPO_PR_MESSAGE = "frontend-"
     DEPENDENCIES = "## ⬆️ Dependencies"
     WHATS_CHANGED = "## What’s Changed"
 
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     aggregate_release_notes = server_latest_release.body
 
     if (
-        f"{FRONTEND_REPO_PR_MESSAGE} {frontend_release.tag_name}"
+        f"{FRONTEND_REPO_PR_MESSAGE}{frontend_release.tag_name}"
         in server_latest_release.body
     ):
         # If the server release contains a PR message, we need to update the changelog and release notes
