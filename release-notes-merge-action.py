@@ -82,9 +82,11 @@ if __name__ == "__main__":
         aggregate_release_notes += f"{frontend_split_formatted}\n\n"
         aggregate_release_notes += f"{DEPENDENCIES}\n\n"
         aggregate_release_notes += "### Server\n\n"
-        aggregate_release_notes += f"{server_split[1].strip()}\n\n"
+        if len(server_split) > 1:
+            aggregate_release_notes += f"{server_split[1].strip()}\n\n"
         aggregate_release_notes += f"### Frontend\n\n"
-        aggregate_release_notes += f"{frontend_split[1].strip()}\n\n"
+        if len(frontend_split) > 1:
+            aggregate_release_notes += f"{frontend_split[1].strip()}\n\n"
 
         server_latest_release.update_release(
             name=server_latest_release.title,
