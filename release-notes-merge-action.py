@@ -18,10 +18,10 @@ parser.add_argument(
     required=True,
 )
 parser.add_argument(
-    "--release_type",
-    type=str,
-    help="Stable or Beta release.",
-    required=False,
+    "--pre_release",
+    type=bool,
+    help="Prerelease boolean.",
+    required=True,
 )
 
 if __name__ == "__main__":
@@ -44,11 +44,11 @@ if __name__ == "__main__":
 
     frontend_release = frontend_repo.get_latest_release()
 
-    release_type = args.release_type
+    pre_release = args.pre_release
 
     addon_version = "music_assistant"
 
-    if release_type & release_type == "BETA":
+    if pre_release is True:
         server_latest_release = next(
             filter(lambda release: release.prerelease, server_repo.get_releases())
         )
