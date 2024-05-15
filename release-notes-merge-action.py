@@ -17,6 +17,12 @@ parser.add_argument(
     help="Github API Access token, NOT the usual Github token.",
     required=True,
 )
+parser.add_argument(
+    "--release_type",
+    type=str,
+    help="Stable or Beta release.",
+    required=False,
+)
 
 if __name__ == "__main__":
     args = parser.parse_args()
@@ -38,14 +44,11 @@ if __name__ == "__main__":
 
     frontend_release = frontend_repo.get_latest_release()
 
-    pre_release_bool = False
+    release_type = args.release_type
 
     addon_version = "music_assistant"
 
-    if "b" in args.release_tag:
-        pre_release_bool = True
-
-    if pre_release_bool is True:
+    if release_type & release_type == "BETA":
         server_latest_release = next(
             filter(lambda release: release.prerelease, server_repo.get_releases())
         )
