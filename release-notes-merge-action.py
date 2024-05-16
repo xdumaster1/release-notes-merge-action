@@ -1,7 +1,6 @@
 import argparse
 import datetime
 
-import yaml
 from github import Auth, Github
 
 parser = argparse.ArgumentParser()
@@ -16,6 +15,12 @@ parser.add_argument(
     "--github_token",
     type=str,
     help="Github API Access token, NOT the usual Github token.",
+    required=True,
+)
+parser.add_argument(
+    "--pre_release",
+    type=bool,
+    help="Prerelease boolean.",
     required=True,
 )
 
@@ -39,24 +44,22 @@ if __name__ == "__main__":
 
     frontend_release = frontend_repo.get_latest_release()
 
-    pre_release_bool = False
+    pre_release = args.pre_release
 
-    if "b" in args.release_tag:
-        pre_release_bool = True
+    addon_version = "music_assistant"
 
-    if pre_release_bool == True:
+    if pre_release is True:
         server_latest_release = next(
             filter(lambda release: release.prerelease, server_repo.get_releases())
         )
+        addon_version = "music_assistant_beta"
     else:
         server_latest_release = server_repo.get_latest_release()
 
-    changelog_file = addon_repo.get_contents(
-        "music_assistant_beta/CHANGELOG.md", ref=MAIN
-    )
+    changelog_file = addon_repo.get_contents(f"{addon_version}/CHANGELOG.md", ref=MAIN)
 
     addon_config_file = addon_repo.get_contents(
-        "music_assistant_beta/config.yaml", ref=MAIN
+        f"{addon_version}/config.yaml", ref=MAIN
     )
 
     existing_changelog_content = changelog_file.decoded_content.decode("utf-8")
@@ -84,7 +87,7 @@ if __name__ == "__main__":
         aggregate_release_notes += "### Server\n\n"
         if len(server_split) > 1:
             aggregate_release_notes += f"{server_split[1].strip()}\n\n"
-        aggregate_release_notes += f"### Frontend\n\n"
+        aggregate_release_notes += "### Frontend\n\n"
         if len(frontend_split) > 1:
             aggregate_release_notes += f"{frontend_split[1].strip()}\n\n"
 
@@ -99,7 +102,7 @@ if __name__ == "__main__":
     updated_changelog += f"{existing_changelog_content}\n\n"
 
     addon_repo.update_file(
-        path="music_assistant_beta/CHANGELOG.md",
+        path=f"{addon_version}/CHANGELOG.md",
         message=f"Update CHANGELOG.md for {server_latest_release.tag_name}",
         content=updated_changelog,
         sha=changelog_file.sha,
