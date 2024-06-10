@@ -1,7 +1,6 @@
 import argparse
 import datetime
 
-import yaml
 from github import Auth, Github
 
 parser = argparse.ArgumentParser()
@@ -39,12 +38,9 @@ if __name__ == "__main__":
 
     frontend_release = frontend_repo.get_latest_release()
 
-    pre_release_bool = False
+    pre_release = args.pre_release in ("true", "True")
 
-    if "b" in args.release_tag:
-        pre_release_bool = True
-
-    if pre_release_bool == True:
+    if pre_release is True:
         server_latest_release = next(
             filter(lambda release: release.prerelease, server_repo.get_releases())
         )
@@ -84,14 +80,14 @@ if __name__ == "__main__":
         aggregate_release_notes += "### Server\n\n"
         if len(server_split) > 1:
             aggregate_release_notes += f"{server_split[1].strip()}\n\n"
-        aggregate_release_notes += f"### Frontend\n\n"
+        aggregate_release_notes += "### Frontend\n\n"
         if len(frontend_split) > 1:
             aggregate_release_notes += f"{frontend_split[1].strip()}\n\n"
 
         server_latest_release.update_release(
             name=server_latest_release.title,
             message=aggregate_release_notes,
-            prerelease=pre_release_bool,
+            prerelease=pre_release,
         )
 
     updated_changelog = f"# [{server_latest_release.title}] - {log_date}\n\n"
