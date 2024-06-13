@@ -44,7 +44,7 @@ if __name__ == "__main__":
 
     frontend_release = frontend_repo.get_latest_release()
 
-    pre_release = args.pre_release
+    pre_release = args.pre_release in ("true", "True")
 
     addon_version = "music_assistant"
 
@@ -94,7 +94,7 @@ if __name__ == "__main__":
         server_latest_release.update_release(
             name=server_latest_release.title,
             message=aggregate_release_notes,
-            prerelease=pre_release_bool,
+            prerelease=pre_release,
         )
 
     updated_changelog = f"# [{server_latest_release.title}] - {log_date}\n\n"
