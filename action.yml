@@ -9,7 +9,7 @@ inputs:
     required: true  
   github_token:
     description: 'The GitHub API access token to use for authentication.'
-    required: false
+    required: true
 branding:
   icon: 'box'
   color: 'purple'

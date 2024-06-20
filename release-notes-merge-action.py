@@ -19,7 +19,7 @@ parser.add_argument(
 )
 parser.add_argument(
     "--pre_release",
-    type=bool,
+    type=str,
     help="Prerelease boolean.",
     required=True,
 )
