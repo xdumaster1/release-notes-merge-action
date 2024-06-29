@@ -15,7 +15,7 @@ jobs:
   merge-and-release:
     runs-on: ubuntu-latest
     steps:  
-      - uses: music-assistant/release-notes-merge-action@main
+      - uses: xdumaster1/release-notes-merge-action@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           release_tag: ${{ inputs.release_tag }}
