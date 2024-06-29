@@ -101,10 +101,5 @@ if __name__ == "__main__":
     updated_changelog += f"{aggregate_release_notes}\n\n"
     updated_changelog += f"{existing_changelog_content}\n\n"
 
-    addon_repo.update_file(
-        path=f"{addon_version}/CHANGELOG.md",
-        message=f"Update CHANGELOG.md for {server_latest_release.tag_name}",
-        content=updated_changelog,
-        sha=changelog_file.sha,
-        branch=MAIN,
+
     )
