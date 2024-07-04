@@ -1,6 +1,7 @@
 import argparse
 import datetime
 from github import Auth, Github
+from github.GithubException import UnknownObjectException
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Update release notes and changelog for a GitHub repository.")
@@ -43,12 +44,30 @@ def main():
     release_tag = args.release_tag
 
     # Fetch the latest release
-    latest_release = repo.get_latest_release()
+    try:
+        latest_release = repo.get_latest_release()
+    except UnknownObjectException:
+        print("No latest release found.")
+        latest_release = None
+
+    if not latest_release:
+        # Handle the case where no latest release is found
+        print("No releases found in the repository.")
+        return
 
     # Check if this is a pre-release
     if pre_release:
-        latest_release = next(filter(lambda release: release.prerelease, repo.get_releases()), None)
+        try:
+            latest_release = next(filter(lambda release: release.prerelease, repo.get_releases()), None)
+        except StopIteration:
+            print("No pre-release found.")
+            latest_release = None
+        
         ADDON_VERSION = "music_assistant_beta"
+
+    if not latest_release:
+        print("No pre-release found in the repository.")
+        return
 
     # Fetch the changelog and config files
     changelog_file = repo.get_contents(f"{ADDON_VERSION}/CHANGELOG.md", ref=MAIN)
